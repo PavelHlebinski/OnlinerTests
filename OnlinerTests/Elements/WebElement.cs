@@ -7,8 +7,9 @@ namespace OnlinerTests.Elements
     public class WebElement
     {
         private readonly By _locator;
+        private readonly IWebDriver _driver = DriverFactory.GetDriver();
 
-        private static Actions Actions => new Actions(DriverFactory.GetDriver());
+        private Actions Actions => new Actions(_driver);
 
         public WebElement(By locator)
         {
@@ -20,7 +21,7 @@ namespace OnlinerTests.Elements
             get
             {
                 WaitForElementIsPresent();
-                return DriverFactory.GetDriver().FindElement(_locator);
+                return _driver.FindElement(_locator);
             }
         }
 
@@ -31,5 +32,7 @@ namespace OnlinerTests.Elements
         public void SendKeys(string value) => InnerWebElement.SendKeys(value);
 
         public string GetText() => InnerWebElement.Text;
+
+        public void ScrollToElement() => Actions.MoveToElement(InnerWebElement).Perform();
     }
 }

@@ -9,13 +9,6 @@ namespace OnlinerTests.Factories
 
         public static IWebDriver GetDriver() => _driver ??= SetupDriver();
 
-        public static void QuitDriver()
-        {
-            _driver.Quit();
-            _driver = null;
-            WaitFactory.CloseWait();
-        }
-
         private static IWebDriver SetupDriver() => new ChromeDriver(GetOptions());
 
         private static ChromeOptions GetOptions()
